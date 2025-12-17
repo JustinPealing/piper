@@ -1,0 +1,22 @@
+// Loop examples
+
+// For loop with array
+print("For loop:")
+for item in [1, 2, 3, 4, 5] {
+  print("  Item:", item)
+}
+
+// While loop
+print("\nWhile loop countdown:")
+var i = 5
+while i > 0 {
+  print("  ", i)
+  i = i - 1
+}
+print("  Blast off!")
+
+// For loop with range
+print("\nFor loop with range:")
+for n in range(0, 5) {
+  print("  n =", n, "squared =", n * n)
+}

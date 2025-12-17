@@ -1,0 +1,25 @@
+{
+  "name": "piper",
+  "version": "0.1.0",
+  "description": "A pipe-first programming language that transpiles to JavaScript",
+  "main": "dist/cli.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "piper": "node dist/cli.js",
+    "piper:dev": "ts-node --esm src/cli.ts",
+    "test": "node --test --experimental-test-coverage tests/*.test.js",
+    "test:watch": "node --test --watch tests/*.test.js"
+  },
+  "bin": {
+    "piper": "./dist/cli.js"
+  },
+  "keywords": ["language", "transpiler", "pipe-operator"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}

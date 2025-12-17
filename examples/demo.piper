@@ -1,0 +1,47 @@
+// Piper Language Demo
+// Showcasing the pipe operator and functional programming
+
+print("=== Piper Language Demo ===\n")
+
+// Data processing pipeline
+print("Pipeline example:")
+print("Sum of squares of even numbers from 1-20:")
+
+let result = range(1, 21)
+  |> filter(|x| x % 2 == 0)
+  |> map(|x| x * x)
+  |> sum
+
+print("Result:", result)
+
+// Function composition
+print("\nFunction composition:")
+
+fn double(x) = x * 2
+fn square(x) = x * x
+fn increment(x) = x + 1
+
+let composed = 3 |> double |> square |> increment
+print("3 |> double |> square |> increment =", composed)
+
+// Higher-order functions
+print("\nHigher-order functions:")
+
+fn apply_twice(f, x) = f(f(x))
+
+print("apply_twice(double, 5) =", apply_twice(double, 5))
+print("apply_twice(square, 3) =", apply_twice(square, 3))
+
+// FizzBuzz with pipes
+print("\nFizzBuzz (1-15):")
+
+fn fizzbuzz(n) {
+  if n % 15 == 0 then "FizzBuzz"
+  else if n % 3 == 0 then "Fizz"
+  else if n % 5 == 0 then "Buzz"
+  else n
+}
+
+range(1, 16) |> map(fizzbuzz) |> map(|x| print("  ", x))
+
+print("\n=== Demo Complete ===")

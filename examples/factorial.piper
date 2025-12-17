@@ -1,0 +1,20 @@
+// Factorial calculation (iterative and recursive)
+
+// Iterative version
+fn factorial_iterative(n) {
+  var result = 1
+  var i = 1
+  while i <= n {
+    result = result * i
+    i = i + 1
+  }
+  result
+}
+
+// Recursive version
+fn factorial_recursive(n) = if n <= 1 then 1 else n * factorial_recursive(n - 1)
+
+// Test both versions
+let n = 10
+print("Iterative factorial(" + n + ") =", factorial_iterative(n))
+print("Recursive factorial(" + n + ") =", factorial_recursive(n))

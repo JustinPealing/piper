@@ -1,0 +1,17 @@
+// Demonstrating the pipe operator
+
+// Generate numbers 1-10, double evens, and sum them
+let result = range(1, 11)
+  |> filter(|x| x % 2 == 0)
+  |> map(|x| x * 2)
+  |> sum
+
+print("Sum of doubled even numbers 1-10:", result)
+
+// Alternatively, with intermediate variables
+let numbers = range(1, 11)
+let evens = filter(numbers, |x| x % 2 == 0)
+let doubled = map(evens, |x| x * 2)
+let total = sum(doubled)
+
+print("Same result:", total)

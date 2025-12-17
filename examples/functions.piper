@@ -1,0 +1,26 @@
+// Function examples
+
+// Expression-style function
+fn square(x) = x * x
+
+// Block-style function
+fn greet(name) {
+  let message = "Hello, " + name + "!"
+  message
+}
+
+// Higher-order function
+fn makeAdder(x) = |y| x + y
+
+let add5 = makeAdder(5)
+
+print(square(7))
+print(greet("Piper"))
+print(add5(10))
+
+// Function composition using pipes
+fn double(x) = x * 2
+fn increment(x) = x + 1
+
+let result = 5 |> double |> increment
+print("5 doubled then incremented:", result)
