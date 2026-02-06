@@ -1,6 +1,7 @@
 // Lexer/Tokenizer for Piper Language
 
 import { SourceLocation } from './ast.js';
+import { PiperError } from './errors.js';
 
 export enum TokenType {
   // Literals
@@ -169,7 +170,7 @@ export class Lexer {
     }
 
     if (this.current === '\0') {
-      throw new Error(`Unterminated string at line ${start.line}, column ${start.column}`);
+      throw new PiperError('Unterminated string', this.source, start.line, start.column);
     }
 
     this.advance(); // consume closing quote
@@ -303,7 +304,7 @@ export class Lexer {
         case ';': tokens.push({ type: TokenType.SEMICOLON, value: ';', loc }); break;
         case '|': tokens.push({ type: TokenType.PIPE, value: '|', loc }); break;
         default:
-          throw new Error(`Unexpected character '${char}' at line ${loc.line}, column ${loc.column}`);
+          throw new PiperError(`Unexpected character '${char}'`, this.source, loc.line, loc.column);
       }
     }
 

@@ -9,6 +9,7 @@ import { spawn } from 'child_process';
 import { Lexer } from './lexer.js';
 import { Parser } from './parser.js';
 import { CodeGenerator } from './codegen.js';
+import { PiperError, formatError } from './errors.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,7 +18,7 @@ function compile(sourceCode: string): string {
   const lexer = new Lexer(sourceCode);
   const tokens = lexer.tokenize();
 
-  const parser = new Parser(tokens);
+  const parser = new Parser(tokens, sourceCode);
   const ast = parser.parse();
 
   const codegen = new CodeGenerator();
@@ -108,7 +109,10 @@ function runCommand(args: string[]): void {
         process.exit(code || 0);
       });
     } catch (error) {
-      if (error instanceof Error) {
+      if (error instanceof PiperError) {
+        error.filePath = inputFile;
+        console.error(formatError(error));
+      } else if (error instanceof Error) {
         console.error(`Error: ${error.message}`);
       } else {
         console.error('An unknown error occurred');
@@ -150,7 +154,10 @@ function runCommand(args: string[]): void {
 
       console.log(`Compiled ${inputFile} -> ${outputFile}`);
     } catch (error) {
-      if (error instanceof Error) {
+      if (error instanceof PiperError) {
+        error.filePath = inputFile;
+        console.error(formatError(error));
+      } else if (error instanceof Error) {
         console.error(`Error: ${error.message}`);
       } else {
         console.error('An unknown error occurred');
