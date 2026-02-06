@@ -6,7 +6,7 @@ import { Parser } from '../dist/parser.js';
 function parse(source) {
   const lexer = new Lexer(source);
   const tokens = lexer.tokenize();
-  const parser = new Parser(tokens);
+  const parser = new Parser(tokens, source);
   return parser.parse();
 }
 

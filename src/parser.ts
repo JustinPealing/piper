@@ -2,14 +2,17 @@
 
 import { Token, TokenType } from './lexer.js';
 import * as AST from './ast.js';
+import { PiperError, TOKEN_DISPLAY_NAMES } from './errors.js';
 
 export class Parser {
   private tokens: Token[];
+  private source: string;
   private pos: number = 0;
 
-  constructor(tokens: Token[]) {
+  constructor(tokens: Token[], source: string = '') {
     // Filter out NEWLINE tokens for easier parsing
     this.tokens = tokens.filter(t => t.type !== TokenType.NEWLINE);
+    this.source = source;
   }
 
   private get current(): Token {
@@ -27,8 +30,13 @@ export class Parser {
   private expect(type: TokenType): Token {
     const token = this.current;
     if (token.type !== type) {
-      throw new Error(
-        `Expected ${type} but got ${token.type} at line ${token.loc.line}, column ${token.loc.column}`
+      const expected = TOKEN_DISPLAY_NAMES[type] || type;
+      const got = TOKEN_DISPLAY_NAMES[token.type] || token.type;
+      throw new PiperError(
+        `Expected ${expected} but found ${got}`,
+        this.source,
+        token.loc.line,
+        token.loc.column,
       );
     }
     return this.advance();
@@ -491,8 +499,12 @@ export class Parser {
       };
     }
 
-    throw new Error(
-      `Unexpected token ${token.type} at line ${token.loc.line}, column ${token.loc.column}`
+    const display = TOKEN_DISPLAY_NAMES[token.type] || token.type;
+    throw new PiperError(
+      `Unexpected token ${display}`,
+      this.source,
+      token.loc.line,
+      token.loc.column,
     );
   }
 
